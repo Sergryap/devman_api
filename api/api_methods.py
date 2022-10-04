@@ -37,9 +37,23 @@ class ApiMethod:
         requests.get(rf"{self.URL_TG}{self.TOKEN_TG}/sendmessage?chat_id={self.chat_id}&text={msg}")
 
 
+def input_chat_id():
+    """Ввод chat_id"""
+    chat_id = ''
+    while not chat_id.isdigit():
+        chat_id = input('Введите ваш chat_id в telegram: ')
+        if chat_id.isdigit():
+            return int(chat_id)
+        else:
+            print('Неверный формат chat_id')
+
+
 def main():
     """Функция получения результата проверок в ожидании в бексконечном цикле"""
-    user = ApiMethod(1642719191)
+    # user = ApiMethod(1642719191)
+    chat_id = input_chat_id()
+    user = ApiMethod(chat_id)
+    user.send_message("Вы подключены к получению уведомлений о проверке заданий на Devmane")
     while True:
         response = user.long_polling_timeout()
         head = response['new_attempts'][0]
