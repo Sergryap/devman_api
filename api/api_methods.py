@@ -1,11 +1,11 @@
 import requests
-import json
 from pprint import pprint
 
 from api.oauth import TOKEN_DEV, TOKEN_TG
 
 
 class ApiMethod:
+
     URL_USER = "https://dvmn.org/api/user_reviews/"
     URL_LONG = "https://dvmn.org/api/long_polling/"
     URL_TG = "https://api.telegram.org/bot"
@@ -42,7 +42,11 @@ def main():
     user = ApiMethod(1642719191)
     while True:
         response = user.long_polling_timeout()
-        msg = f"Ваша работа проверена: {response['new_attempts'][0]['lesson_url']}"
+        head = response['new_attempts'][0]
+        msg = f"Ваша работа проверена:\n" \
+              f"Результат: {'РАБОТА ПРИНЯТА' if head['is_negative'] == False else 'ТРЕБУЕТСЯ ДОРАБОТКА'}\n" \
+              f"lesson_title: {head['lesson_title']}\n" \
+              f"lesson_url: {head['lesson_url']}"
         user.send_message(msg)
         pprint(response)
 
