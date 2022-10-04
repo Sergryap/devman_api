@@ -8,7 +8,6 @@ load_dotenv()
 class ApiMethod:
     """Класс для взаимодействия с api telegram и devman"""
 
-    URL_USER = "https://dvmn.org/api/user_reviews/"
     URL_LONG = "https://dvmn.org/api/long_polling/"
     URL_TG = "https://api.telegram.org/bot"
     TOKEN_TG = os.getenv('TOKEN_TG')
@@ -30,7 +29,8 @@ class ApiMethod:
     def long_polling_timeout(self):
         """
         Метод получения результата проверки в режиме ожидания в цикле
-        До появления статуса о проверке работы
+        До появления статуса о проверке работы.
+        Цикл прерывается и функция завершается, при появлении результата проверки работы
         """
         response = self.long_polling()
         while response['status'] == 'timeout':
