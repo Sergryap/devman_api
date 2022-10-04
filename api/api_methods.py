@@ -22,9 +22,8 @@ class ApiMethod:
             url += f"?timestamp={round(timestamp, 0)}"
         try:
             return requests.get(self.URL_LONG, headers=self.HEADERS).json()
-        except requests.exceptions.ReadTimeout:
+        except (requests.exceptions.ReadTimeout, ConnectionError):
             return self.long_polling(timestamp)
-
 
     def long_polling_timeout(self):
         """Метод получения результата проверки в режиме ожидания в цикле"""
