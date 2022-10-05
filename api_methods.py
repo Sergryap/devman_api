@@ -1,5 +1,4 @@
 import requests
-import os
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -12,9 +11,12 @@ def long_polling(headers, timestamp=None):
     if timestamp:
         url += f"?timestamp={round(timestamp, 0)}"
     try:
-        return requests.get(url, headers=headers).json()
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        return response.json()
+
     except (requests.exceptions.ReadTimeout, ConnectionError):
-        return long_polling(timestamp)
+        return long_polling(headers, timestamp)
 
 
 def long_polling_timeout(headers):
@@ -32,4 +34,8 @@ def long_polling_timeout(headers):
 def send_message(token, chat_id, msg: str):
     """Отправка сообщения через api TG"""
     url = "https://api.telegram.org/bot"
-    requests.get(rf"{url}{token}/sendmessage?chat_id={chat_id}&text={msg}")
+    try:
+        response = requests.get(rf"{url}{token}/sendmessage?chat_id={chat_id}&text={msg}")
+        response.raise_for_status()
+    except (requests.exceptions.ReadTimeout, ConnectionError):
+        send_message(token, chat_id, msg)
