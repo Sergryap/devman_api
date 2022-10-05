@@ -33,9 +33,10 @@ def long_polling_timeout(headers):
 
 def send_message(token, chat_id, msg: str):
     """Отправка сообщения через api TG"""
-    url = "https://api.telegram.org/bot"
+    url = f"https://api.telegram.org/bot{token}/sendmessage"
+    payload = {'chat_id': chat_id, 'text': msg}
     try:
-        response = requests.get(rf"{url}{token}/sendmessage?chat_id={chat_id}&text={msg}")
+        response = requests.get(url, params=payload)
         response.raise_for_status()
     except (requests.exceptions.ReadTimeout, ConnectionError):
         send_message(token, chat_id, msg)
