@@ -1,4 +1,5 @@
 import requests
+from math import trunc
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -8,10 +9,11 @@ def long_polling(headers, timestamp=None):
     """Функция long_polling api devman. Метод разовой проверки"""
 
     url = "https://dvmn.org/api/long_polling/"
-    if timestamp:
-        url += f"?timestamp={round(timestamp, 0)}"
+    timestamp = trunc(timestamp) if timestamp else ""
+    payload = {"timestamp": timestamp}
+
     try:
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, params=payload, headers=headers)
         response.raise_for_status()
         return response.json()
 
@@ -39,4 +41,4 @@ def send_message(token, chat_id, msg: str):
         response = requests.get(url, params=payload)
         response.raise_for_status()
     except (requests.exceptions.ReadTimeout, ConnectionError):
-        send_message(token, chat_id, msg)
+        return send_message(token, chat_id, msg)
