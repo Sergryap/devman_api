@@ -1,21 +1,10 @@
+import os
 from api_methods import long_polling_timeout, send_message
-
-
-def input_chat_id():
-    """Ввод chat_id для отправки сообщений"""
-    chat_id = ''
-    while not chat_id.isdigit():
-        chat_id = input('Введите ваш chat_id в telegram: ')
-        if chat_id.isdigit():
-            return int(chat_id)
-        else:
-            print('Неверный формат chat_id')
 
 
 def main():
     """Функция получения результата проверок в ожидании в бексконечном цикле. Точка входа"""
-    # user = ApiMethod(1642719191)
-    chat_id = input_chat_id()
+    chat_id = os.getenv('CHAT_ID')
     send_message(chat_id, "Вы подключены к получению уведомлений о проверке заданий на Devmane")
     while True:
         response = long_polling_timeout()

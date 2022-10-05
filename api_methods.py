@@ -34,6 +34,6 @@ def long_polling_timeout():
     return response
 
 
-def send_message(chat_id: int, msg: str):
+def send_message(chat_id, msg: str):
     """Отправка сообщения через api TG"""
     requests.get(rf"{URL_TG}{TOKEN_TG}/sendmessage?chat_id={chat_id}&text={msg}")
