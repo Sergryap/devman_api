@@ -39,6 +39,7 @@ def main():
             lesson_url: {head['lesson_url']}
             """
             send_message(token, chat_id, dedent(msg))
+            timestamp = ""
 
 
 if __name__ == '__main__':
