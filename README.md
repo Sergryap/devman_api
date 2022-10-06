@@ -16,27 +16,27 @@
 <br>CHAT_ID=<идентификатор чата в telegram для отправки сообщений от бота>
 
 <br>2. Создать виртуальное окружение:
-    <br>python -m venv venv
+    <br>`python -m venv venv`
     
 <br>3. Активировать виртуальное окружение:
     <br>Для Unix-систем:
-    <br>source venv\bin\activate
+    <br>`source venv\bin\activate`
     <br>Для Windows:
-    <br>venv\Scripts\activate
+    <br>`venv\Scripts\activate`
     
 <br>4. Установить необходимые зависимости:
-    <br>pip install -r requirements txt
+    <br>`pip install -r requirements txt`
     
 <br>5. Запустить скрипт:
-    <br>python main.py
+    <br>`python main.py`
     
-<br>Для unix систем использовать команду python3 вместо python
+<br>Для unix систем использовать команду `python3` вместо `python`
 
 <br>Быстрый способы выложить бота на виртуальном удаленном сервере.
 <br>Выполнить те же шаги по установке.
 <br>Для постоянной работы бота, на последнем шаге использовать команду:
-<br>nohup python3 main.py
-<br>Либо запустить скрпит через screen
+<br>`nohup python3 main.py`
+<br>Либо запустить скрпит через утилиту screen
 
 <h2>Пример установки</h2>
 
