@@ -12,11 +12,11 @@ load_dotenv()
 def main():
     """Функция получения результата проверок в ожидании в бексконечном цикле"""
     url = "https://dvmn.org/api/long_polling/"
-    timestamp = ""
     chat_id = os.getenv('CHAT_ID')
     token = os.getenv('TOKEN_TG')
     headers = {'Authorization': f'Token {os.getenv("TOKEN_DEV")}'}
     send_message(token, chat_id, "Вы подключены к получению уведомлений о проверке заданий на Devman")
+    timestamp = ""
 
     while True:
         try:

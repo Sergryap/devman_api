@@ -10,7 +10,7 @@ def send_message(token, chat_id, msg: str):
         try:
             response = requests.get(url, params=payload)
             response.raise_for_status()
-            return
+            break
         except (requests.exceptions.ReadTimeout, ConnectionError):
             sleep(2)
             continue
