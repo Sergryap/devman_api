@@ -6,7 +6,6 @@ from math import trunc
 from time import sleep
 
 from dotenv import load_dotenv
-load_dotenv()
 
 
 def main():
@@ -23,8 +22,10 @@ def main():
             response = requests.get(url, params={"timestamp": timestamp}, headers=headers)
             response.raise_for_status()
             reviews = response.json()
-        except (requests.exceptions.ReadTimeout, ConnectionError):
+        except ConnectionError:
             sleep(2)
+            continue
+        except requests.exceptions.ReadTimeout:
             continue
 
         if reviews['status'] == 'timeout':
@@ -43,4 +44,5 @@ def main():
 
 
 if __name__ == '__main__':
+    load_dotenv()
     main()
