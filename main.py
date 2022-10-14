@@ -14,14 +14,14 @@ logger = logging.getLogger('telegram')
 
 
 def main():
-    """Функция получения результата проверок в ожидании в бексконечном цикле"""
+    """Функция получения результата проверок в ожидании в бесконечном цикле"""
     chat_id = os.getenv('CHAT_ID')
     token = os.getenv('TOKEN_TG')
     token_log = os.getenv('TOKEN_TG_LOG')
 
     logger.setLevel(logging.WARNING)
     logger.addHandler(MyLogsHandler(token_log, chat_id))
-    logger.warning(f'Бот запущен')
+    logger.warning('Бот запущен')
 
     url = "https://dvmn.org/api/long_polling/"
     headers = {'Authorization': f'Token {os.getenv("TOKEN_DEV")}'}
