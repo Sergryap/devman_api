@@ -27,13 +27,8 @@ TOKEN_DEV=<токен от сервиса Devman>
 `python3 -m venv venv`
     
 ##### Активировать виртуальное окружение:
-Для Unix-систем:
 
 `source venv\bin\activate`
-
-<br>Для Windows:
-
-`venv\Scripts\activate`
     
 #####  Установить необходимые зависимости:
 
