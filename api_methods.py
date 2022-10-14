@@ -14,6 +14,8 @@ def send_message(token, chat_id, msg: str):
             response.raise_for_status()
             return
         except (requests.exceptions.ReadTimeout, ConnectionError) as er:
-            sleep(5)
+            sleep(2)
             logger.warning(f'Ошибка на стороне Tg: {er}', stack_info=True)
             continue
+        except Exception as err:
+            logger.exception(err)
