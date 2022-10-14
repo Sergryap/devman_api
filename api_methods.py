@@ -1,5 +1,7 @@
 import requests
 from time import sleep
+import logging
+logger = logging.getLogger('telegram')
 
 
 def send_message(token, chat_id, msg: str):
@@ -11,6 +13,7 @@ def send_message(token, chat_id, msg: str):
             response = requests.get(url, params=payload)
             response.raise_for_status()
             return
-        except (requests.exceptions.ReadTimeout, ConnectionError):
-            sleep(2)
+        except (requests.exceptions.ReadTimeout, ConnectionError) as er:
+            sleep(5)
+            logger.warning(f'Ошибка на стороне Tg: {er}', stack_info=True)
             continue
