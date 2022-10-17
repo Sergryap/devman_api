@@ -1,11 +1,10 @@
 import os
 import requests
+
 from api_methods import send_message
 from textwrap import dedent
 from math import trunc
 from time import sleep
-from time import time
-
 from dotenv import load_dotenv
 from logger import MyLogsHandler
 
@@ -15,6 +14,8 @@ logger = logging.getLogger('telegram')
 
 def main():
     """Функция получения результата проверок в ожидании в бесконечном цикле"""
+    load_dotenv()
+
     chat_id = os.getenv('CHAT_ID')
     token = os.getenv('TOKEN_TG')
     token_log = os.getenv('TOKEN_TG_LOG')
@@ -26,11 +27,9 @@ def main():
     url = "https://dvmn.org/api/long_polling/"
     headers = {'Authorization': f'Token {os.getenv("TOKEN_DEV")}'}
     timestamp = ""
-    count = 0
 
     while True:
         try:
-            start_time = time()
             response = requests.get(url, params={"timestamp": timestamp}, headers=headers)
             response.raise_for_status()
             reviews = response.json()
@@ -59,16 +58,10 @@ def main():
             logger.warning(f'Ошибка ReadTimeout: {err}', stack_info=True)
             continue
         except Exception as err:
-            if time() - start_time > 2:
-                count = 0  # обнуляем счетчик, если ошибка разовая
             logger.exception(err)
-            count += 1
-            if count == 10:  # если ошибка не прекращается, прерываем работу бота
-                break
 
     logger.critical('Бот вышел из цикла и упал:', stack_info=True)
 
 
 if __name__ == '__main__':
-    load_dotenv()
     main()
